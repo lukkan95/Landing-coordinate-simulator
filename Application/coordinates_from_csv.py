@@ -12,7 +12,11 @@ class Coordinates(object):
         with open(file, 'r') as temporary_csv:
             dlmread = []
             for row in temporary_csv:
-                dlmread.append(re.sub('\n', '', row))
+                raw = re.sub('\n', '', row)
+                temp_list = []
+                for elem in raw.split(','):
+                    temp_list.append(round(float(elem), 3))
+                    dlmread.append(temp_list)
             return dlmread
 
 

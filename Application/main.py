@@ -25,11 +25,11 @@ class Main(object):
 
     def enuArray(self, coordinateArray, referenceCordinates):
         for i in range(len(coordinateArray)):
-
+            pass
 
 
 
 
 if __name__ == '__main__':
     main = Main()
-    # print(main.range_limits)
+    print(main.range_limits)
