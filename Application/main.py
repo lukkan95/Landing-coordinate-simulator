@@ -1,5 +1,6 @@
 from launchpad import launchpad
 from coordinates_from_csv import *
+from geo2enu import *
 
 
 class Main(object):
@@ -23,13 +24,17 @@ class Main(object):
         self.range_shore = range_shore
         self.range_sea_limits = range_sea_limits
 
-    def enuArray(self, coordinateArray, referenceCordinates):
+    def coordinateArray2enu(self, coordinateArray, referenceCordinates):
         for i in range(len(coordinateArray)):
-            pass
+            # print(i)
+            enuArray = geo2enu(coordinateArray[i], referenceCordinates)
+            print(enuArray)
 
 
 
 
 if __name__ == '__main__':
     main = Main()
-    print(main.range_limits)
+    z = main.range_limits
+    # print(range_limits[0])
+    main.coordinateArray2enu(range_limits, launchpad.coordinates)
