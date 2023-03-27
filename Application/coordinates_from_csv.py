@@ -15,7 +15,7 @@ class Coordinates(object):
                 raw = re.sub('\n', '', row)
                 temp_list = []
                 for elem in raw.split(','):
-                    temp_list.append(round(float(elem), 3))
+                    temp_list.append(round(float(elem), 9))
                 dlmread.append(temp_list)
             return dlmread
 

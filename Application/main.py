@@ -26,7 +26,7 @@ class Main(object):
 
     def coordinateArray2enu(self, coordinateArray, referenceCordinates):
         for i in range(len(coordinateArray)):
-            # print(i)
+            print(i)
             enuArray = geo2enu(coordinateArray[i], referenceCordinates)
             print(enuArray)
 

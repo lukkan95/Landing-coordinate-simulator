@@ -3,12 +3,13 @@ from geo2ecef import *
 
 def geo2enu(geo_coordinates_transformed, geo_coordinates_base):
 
-    ecef_coordinates_transformed = geo2ecef(geo_coordinates_transformed)
-    ecef_coordinates_base = geo2ecef(geo_coordinates_base)
+    ecef_coordinates_transformed = array([
+        geo2ecef(geo_coordinates_transformed)
+        ])
 
-    substracted = []
-    for item1, item2 in zip(ecef_coordinates_transformed, ecef_coordinates_base):
-        substracted.append(item1-item2)
+    ecef_coordinates_base = array([
+        geo2ecef(geo_coordinates_base)
+        ])
 
     R_geo = geo_coordinates_base
     phi = radians(R_geo[0])
@@ -21,13 +22,7 @@ def geo2enu(geo_coordinates_transformed, geo_coordinates_base):
 
     ])
 
-    substracted_matrix = array([
-        [substracted[0], substracted[1], substracted[2]]
-
-    ])
-    # print(substracted_matrix.shape, M.shape)
-    # print(substracted_matrix)
-    enu_coordinates = dot(substracted_matrix, M)
-    # print(f'GEO2ENU - enu_coordinates:{enu_coordinates}')
+    enu_coordinates = M.dot(transpose(ecef_coordinates_transformed) - transpose(ecef_coordinates_base))
     return enu_coordinates
 
+# print(geo2enu([54.515, 16.648, 0.0], [54.567, 16.742, 0]))

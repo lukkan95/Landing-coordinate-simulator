@@ -17,5 +17,8 @@ def geo2ecef(R_geo):
     R_3 = ((b/a)**2*N+altitude) * sin(radians(latitude)) #Z
 
     R = [R_1, R_2, R_3]
-    # print(f'GEO2ECEF - R:{R}')
     return R
+
+
+# print(geo2ecef([54.515, 16.648, 0.0]))
+# print(geo2ecef([54.567, 16.742, 0]))
