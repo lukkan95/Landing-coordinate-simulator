@@ -25,10 +25,11 @@ class Main(object):
         self.range_sea_limits = range_sea_limits
 
     def coordinateArray2enu(self, coordinateArray, referenceCordinates):
+        enuArray_list = []
         for i in range(len(coordinateArray)):
-            print(i)
             enuArray = geo2enu(coordinateArray[i], referenceCordinates)
-            print(enuArray)
+            enuArray_list.append(enuArray)
+        return enuArray_list
 
 
 
@@ -36,5 +37,7 @@ class Main(object):
 if __name__ == '__main__':
     main = Main()
     z = main.range_limits
-    # print(range_limits[0])
-    main.coordinateArray2enu(range_limits, launchpad.coordinates)
+    range_limits_enu = main.coordinateArray2enu(range_limits, launchpad.coordinates)
+    smaller_range_limits_enu = main.coordinateArray2enu(smaller_range_limits, launchpad.coordinates)
+    range_shore_enu = main.coordinateArray2enu(range_shore, launchpad.coordinates)
+    range_sea_limits_enu = main.coordinateArray2enu(range_sea_limits, launchpad.coordinates)
