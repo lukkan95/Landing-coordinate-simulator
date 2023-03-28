@@ -1,6 +1,7 @@
 from launchpad import launchpad
 from coordinates_from_csv import *
 from geo2enu import *
+from os import *
 
 
 class Main(object):
@@ -31,6 +32,9 @@ class Main(object):
             enuArray_list.append(enuArray)
         return enuArray_list
 
+    # def create_simulations_directories(self):
+
+
 
 
 
@@ -41,3 +45,5 @@ if __name__ == '__main__':
     smaller_range_limits_enu = main.coordinateArray2enu(smaller_range_limits, launchpad.coordinates)
     range_shore_enu = main.coordinateArray2enu(range_shore, launchpad.coordinates)
     range_sea_limits_enu = main.coordinateArray2enu(range_sea_limits, launchpad.coordinates)
+
+
