@@ -1,4 +1,5 @@
 import os.path
+import re
 # from os import *
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -8,15 +9,21 @@ sim_number = 97
 
 result = []
 
+
+def sorting_key(arg):
+    return arg[0:5]
+
+i = 0
 for j in range(1, simulation_batches_number+1):
-    batch_folder_name = f'simulations_{j}'
-    # if not os.path.exists(batch_folder_name):
-    #     os.mkdir(batch_folder_name)
-    # temp_path = f'{ROOT_DIR}\{batch_folder_name}'
-    # os.chdir(temp_path)
-    for sim in os.listdir(batch_folder_name):
-        f = os.path.join(batch_folder_name, sim)
-        # with open(temp_path, 'w') as output:
-        #     output.write('hello')
-        if os.path.isfile(f):
-            print(f)
+    batch_folder_name = f'{ROOT_DIR}\simulations_{j}'
+    path = os.listdir(batch_folder_name)
+    for filename in sorted(map(lambda x: re.split('sim|_', x)[1], path), key=int):
+        with open(f'{ROOT_DIR}\simulations_{j}\sim{filename}_2_summary', 'r') as f:
+            head = next(f.read() for _ in range(9))
+            head_splitted = re.split('\n', head)
+            head_splitted.insert(0, f'simulations_{j}\sim{filename}_2_summary')
+            print(head_splitted)
+            i+=1
+
+print(i)
+
