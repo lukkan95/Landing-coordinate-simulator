@@ -10,9 +10,6 @@ sim_number = 97
 result = []
 
 
-def sorting_key(arg):
-    return arg[0:5]
-
 i = 0
 for j in range(1, simulation_batches_number+1):
     batch_folder_name = f'{ROOT_DIR}\simulations_{j}'
@@ -22,8 +19,18 @@ for j in range(1, simulation_batches_number+1):
             head = next(f.read() for _ in range(9))
             head_splitted = re.split('\n', head)
             head_splitted.insert(0, f'simulations_{j}\sim{filename}_2_summary')
-            print(head_splitted)
+            result.append(head_splitted)
             i+=1
 
+# print(*result, sep='\n')
 print(i)
+
+def create_impact_points(result):
+    impact_points = []
+    for x in result:
+        temp_list = [re.split(': ', x[2])[1], re.split(': ', x[3])[1], 0]
+        impact_points.append(temp_list)
+    return impact_points
+
+print(*create_impact_points(result), sep='\n')
 
