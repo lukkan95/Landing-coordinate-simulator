@@ -12,5 +12,9 @@ def enu2ecef2(V_enu, R_geo):
         [0, cos(phi), sin(phi)]
 
     ])
+    sum_arrays = [V_enu[0]+R_ecef[0], V_enu[1]+R_ecef[1], V_enu[2]+R_ecef[2]]
 
-    V_ecef = M.dot([V_enu[0], V_enu[1], V_enu[2]])
+    # print(sum_arrays)
+    V_ecef = M.dot([V_enu[0], V_enu[1], V_enu[2]]) + [R_ecef[0], R_ecef[1], R_ecef[2]]
+
+    return V_ecef
