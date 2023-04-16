@@ -33,4 +33,3 @@ def create_impact_points(result):
     return impact_points
 
 print(*create_impact_points(result), sep='\n')
-
