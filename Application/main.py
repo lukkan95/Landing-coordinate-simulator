@@ -1,8 +1,7 @@
 from launchpad import launchpad
 from coordinates_from_csv import *
 from geo2enu import *
-from os import *
-
+from Postprocessing import Postprocessing
 
 class Main(object):
 
@@ -45,5 +44,7 @@ if __name__ == '__main__':
     smaller_range_limits_enu = main.coordinateArray2enu(smaller_range_limits, launchpad.coordinates)
     range_shore_enu = main.coordinateArray2enu(range_shore, launchpad.coordinates)
     range_sea_limits_enu = main.coordinateArray2enu(range_sea_limits, launchpad.coordinates)
+    postprocessing = Postprocessing()
+    print(*postprocessing.final_impact_points_coordinates(), sep='\n')
 
 
