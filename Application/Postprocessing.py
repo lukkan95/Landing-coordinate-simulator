@@ -2,6 +2,7 @@ import os.path
 import re
 from launchpad import *
 from enu2geo import *
+from geo2enu import *
 
 
 class Postprocessing(object):
@@ -11,7 +12,6 @@ class Postprocessing(object):
         self.simulation_batches_number = 4
         self.start_number = 1
         self.sim_number = 97
-
 
 
     def making_result(self):
@@ -30,15 +30,12 @@ class Postprocessing(object):
         return result
 
 
-
     def create_impact_points(self, result):
         impact_points = []
         for x in result:
             temp_list = [float(re.split(': ', x[2])[1]), float(re.split(': ', x[3])[1]), 0]
             impact_points.append(temp_list)
         return impact_points
-
-
 
 
     def create_impact_points_coordinates(self, arg):
@@ -50,12 +47,31 @@ class Postprocessing(object):
             elem[2] = 0
         return impact_points_coordinates
 
-    def final_impact_points_coordinates(self):
+    def geo(self):
         impact_points_coordinates = self.create_impact_points_coordinates(self.create_impact_points(
             self.making_result()))
         return impact_points_coordinates
 
+    def enu(self):
+        temp_enu_list = []
+        impact_points_geo = self.geo()
+        for elem in impact_points_geo:
+            temp_enu_list.append(geo2enu(elem, launchpad.coordinates))
+        return temp_enu_list
 
-# if __name__ == '__main__':
-#   postprocessing = Postprocessing()
-#   print(*postprocessing.final_impact_points(), sep='\n')
+
+
+# class SimulatedImpactPoints(Postprocessing):
+#     def __init__(self):
+#         super().__init__()
+#
+#
+#     def geo(self):
+#         self.final_impact_points_coordinates()
+#
+#     def enu(self):
+#         temp_geo = self.geo()
+#         for i in temp_geo:
+#
+
+
