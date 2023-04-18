@@ -46,6 +46,8 @@ if __name__ == '__main__':
     range_sea_limits_enu = main.coordinateArray2enu(range_sea_limits, launchpad.coordinates)
     postprocessing = Postprocessing()
     # print(*postprocessing.geo(), sep='\n')
-    # simulated_impact_points_geo = postprocessing.geo()
-    print(postprocessing.enu()[1])
+    simulated_impact_points_geo = postprocessing.geo()
+    # print(postprocessing.enu()[1])
+    # print(postprocessing.mean())
+    print(postprocessing.downgrade_line_theta())
 

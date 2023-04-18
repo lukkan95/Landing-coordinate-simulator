@@ -57,21 +57,22 @@ class Postprocessing(object):
         impact_points_geo = self.geo()
         for elem in impact_points_geo:
             temp_enu_list.append(geo2enu(elem, launchpad.coordinates))
+        # print('im called')
         return temp_enu_list
 
+    def mean(self):
+        impact_points_enu = self.enu()
+        temp_column_1 = []
+        temp_column_2 = []
+        for i in impact_points_enu:
+            temp_column_1.append(i[0])
+            temp_column_2.append(i[1])
+        temp_mean = [mean(temp_column_1), mean(temp_column_2)]
+        return temp_mean
 
+    def downgrade_line_theta(self):
+        temp_mean = self.mean()
+        return rad2deg(atan2(temp_mean[0], temp_mean[1]))
 
-# class SimulatedImpactPoints(Postprocessing):
-#     def __init__(self):
-#         super().__init__()
-#
-#
-#     def geo(self):
-#         self.final_impact_points_coordinates()
-#
-#     def enu(self):
-#         temp_geo = self.geo()
-#         for i in temp_geo:
-#
 
 
