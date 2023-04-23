@@ -3,7 +3,7 @@ import re
 from launchpad import *
 from enu2geo import *
 from geo2enu import *
-
+from flat_rotation import *
 
 class Postprocessing(object):
 
@@ -73,6 +73,16 @@ class Postprocessing(object):
     def downgrade_line_theta(self):
         temp_mean = self.mean()
         return rad2deg(atan2(temp_mean[0], temp_mean[1]))
+
+    def range(self):
+        temp_geo = self.geo()
+        temp_enu = self.enu()
+        temp_theta = self.downgrade_line_theta()
+        temp_range = []
+        for i in range(len(temp_geo)):
+            temp_range.append(flat_rotation(temp_enu[i][0:1], 360 - temp_theta))
+        return temp_range
+
 
 
 

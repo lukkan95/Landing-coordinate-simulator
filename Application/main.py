@@ -49,5 +49,6 @@ if __name__ == '__main__':
     simulated_impact_points_geo = postprocessing.geo()
     # print(postprocessing.enu()[1])
     # print(postprocessing.mean())
-    print(postprocessing.downgrade_line_theta())
+    # print(postprocessing.downgrade_line_theta())
+    print(postprocessing.range())
 
