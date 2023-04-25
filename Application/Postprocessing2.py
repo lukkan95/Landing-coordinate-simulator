@@ -29,49 +29,64 @@ class Postprocessing(object):
             self.results.append(y)
         return self.results
 
-    def create_impact_points(self, result):
+    def create_impact_points(self):
+        call_results = self.making_result_new()
         impact_points = []
-        for x in result:
-            temp_list = [float(re.split(': ', x[2])[1]), float(re.split(': ', x[3])[1]), 0]
+        for x in call_results:
+            temp_list = []
+            for y in x:
+                temp_list.append([y[1], y[2], 0])
             impact_points.append(temp_list)
         return impact_points
 
 
-    def create_impact_points_coordinates(self, arg):
+    def create_impact_points_coordinates(self):
+        call_impact_points = self.create_impact_points()
         impact_points_coordinates = []
-        for x in arg:
-            temp = enu2geo(x, launchpad.coordinates)
-            impact_points_coordinates.append(temp)
-        for elem in impact_points_coordinates:
-            elem[2] = 0
+        for x in call_impact_points:
+            temp_list = []
+            for y in x:
+                temp = enu2geo(y, launchpad.coordinates)
+                temp_list.append(temp)
+            impact_points_coordinates.append(temp_list)
+        for i in impact_points_coordinates:
+            for elem in i:
+                elem[2] = 0
         return impact_points_coordinates
 
     def geo(self):
-        impact_points_coordinates = self.create_impact_points_coordinates(self.create_impact_points(
-            self.making_result_new()))
+        impact_points_coordinates = self.create_impact_points_coordinates()
         return impact_points_coordinates
 
     def enu(self):
         temp_enu_list = []
-        impact_points_geo = self.geo()
-        for elem in impact_points_geo:
-            temp_enu_list.append(geo2enu(elem, launchpad.coordinates))
-        # print('im called')
+        call_impact_points_geo = self.geo()
+        for elem in call_impact_points_geo:
+            temp_list = []
+            for x in elem:
+                temp_list.append(geo2enu(x, launchpad.coordinates))
+            temp_enu_list.append(temp_list)
         return temp_enu_list
 
     def mean(self):
-        impact_points_enu = self.enu()
-        temp_column_1 = []
-        temp_column_2 = []
-        for i in impact_points_enu:
-            temp_column_1.append(i[0])
-            temp_column_2.append(i[1])
-        temp_mean = [mean(temp_column_1), mean(temp_column_2)]
-        return temp_mean
+        call_impact_points_enu = self.enu()
+        temp_mean_summ = []
+        for i in call_impact_points_enu:
+            temp_column_1 = []
+            temp_column_2 = []
+            for x in i:
+                temp_column_1.append(x[0])
+                temp_column_2.append(x[1])
+            temp_mean = [mean(temp_column_1), mean(temp_column_2)]
+            temp_mean_summ.append(temp_mean)
+        return temp_mean_summ
 
     def downgrade_line_theta(self):
         temp_mean = self.mean()
-        return rad2deg(atan2(temp_mean[0], temp_mean[1]))
+        temp_theta = []
+        for i in temp_mean:
+            temp_theta.append(rad2deg(atan2(i[0], i[1])))
+        return temp_theta
 
     def range(self):
         temp_geo = self.geo()
