@@ -4,6 +4,7 @@ from enu2geo import *
 from geo2enu import *
 from flat_rotation import *
 from get_summary import *
+import statistics
 
 class Postprocessing(object):
 
@@ -94,9 +95,54 @@ class Postprocessing(object):
         temp_theta = self.downgrade_line_theta()
         temp_range = []
         for i in range(len(temp_geo)):
-            temp_range.append(flat_rotation(temp_enu[i][0:1], 360 - temp_theta))
+            temp_range_2 = []
+            for h in range(len(temp_geo[i])):
+                temp_range_2.append(flat_rotation([temp_enu[i][h][0:1][0][0], temp_enu[i][h][1:2][0][0]], 360 - temp_theta[i]))
+            temp_range.append(temp_range_2)
         return temp_range
 
+    def sim_calculations(self):
+        simulated_range = self.range()
+        temp_sim_calc = []
+        for elems in simulated_range:
+            temp_sim_range_0 = []
+            temp_sim_range_1 = []
+            for elem in elems:
+                temp_sim_range_0.append(elem[0])
+                temp_sim_range_1.append(elem[1])
 
+            sim_downrange_mean = statistics.mean(temp_sim_range_1)
+            sim_downrange_stdev = statistics.stdev(temp_sim_range_1)
+            sim_downrange_maximal = max(temp_sim_range_1)
+            sim_downrange_minimal = min(temp_sim_range_1)
+
+            sim_crossrange_mean = statistics.mean(temp_sim_range_0)
+            sim_crossrange_stdev = statistics.stdev(temp_sim_range_0)
+            sim_crossrange_maximal = max(temp_sim_range_0)
+            sim_crossrange_minimal = min(temp_sim_range_0)
+
+            dict = {
+                'sim_downrange_mean':sim_downrange_mean,
+                'sim_downrange_stdev':sim_downrange_stdev,
+                'sim_downrange_maximal':sim_downrange_maximal,
+                'sim_downrange_minimal':sim_downrange_minimal,
+
+
+                'sim_crossrange_mean':sim_crossrange_mean,
+                'sim_crossrange_stdev':sim_crossrange_stdev,
+                'sim_crossrange_maximal':sim_crossrange_maximal,
+                'sim_crossrange_minimal':sim_crossrange_minimal
+
+
+            }
+
+            # plt_downrange_line(i) = downrange_line.theta
+            # plt_impact_mean(i,:) = simulated_impact_points.mean
+            # plt_downrange_mean(i) = sim_downrange.mean
+            # plt_downrange_stdev(i) = sim_downrange.stdev
+            # plt_crossrange_mean(i) = sim_crossrange.mean
+            # plt_crossrange_stdev(i) = sim_crossrange.stdev
+            temp_sim_calc.append(dict)
+        return temp_sim_calc
 
 
