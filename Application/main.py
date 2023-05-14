@@ -37,20 +37,21 @@ class Main(object):
 
 
 
-if __name__ == '__main__':
-    main = Main()
-    z = main.range_limits
-    range_limits_enu = main.coordinateArray2enu(range_limits, launchpad.coordinates)
-    smaller_range_limits_enu = main.coordinateArray2enu(smaller_range_limits, launchpad.coordinates)
-    range_shore_enu = main.coordinateArray2enu(range_shore, launchpad.coordinates)
-    range_sea_limits_enu = main.coordinateArray2enu(range_sea_limits, launchpad.coordinates)
-    postprocessing = Postprocessing()
-    # print(*postprocessing.geo(), sep='\n')
-    # print(*postprocessing.making_result_new(), sep='\n')
-    # print(*postprocessing.create_impact_points(postprocessing.making_result_new())[0], sep='\n')
-    # print(*postprocessing.create_impact_points_coordinates(), sep='\n')
-    # print(postprocessing.enu()[0])
-    # print(postprocessing.mean())
-    # print(postprocessing.downgrade_line_theta())
-    # print(len(postprocessing.range()[1]))
-    print(*postprocessing.sim_calculations(), sep='\n')
+# if __name__ == '__main__':
+main = Main()
+z = main.range_limits
+range_limits_enu = main.coordinateArray2enu(range_limits, launchpad.coordinates)
+smaller_range_limits_enu = main.coordinateArray2enu(smaller_range_limits, launchpad.coordinates)
+range_shore_enu = main.coordinateArray2enu(range_shore, launchpad.coordinates)
+range_sea_limits_enu = main.coordinateArray2enu(range_sea_limits, launchpad.coordinates)
+postprocessing = Postprocessing()
+# print(*postprocessing.geo(), sep='\n')
+# print(*postprocessing.making_result_new(), sep='\n')
+# print(*postprocessing.create_impact_points(postprocessing.making_result_new())[0], sep='\n')
+# print(*postprocessing.create_impact_points_coordinates(), sep='\n')
+# print(postprocessing.enu()[0])
+# print(postprocessing.mean())
+# print(postprocessing.downgrade_line_theta())
+# print(len(postprocessing.range()[1]))
+# print(*postprocessing.sim_calculations(), sep='\n')
+# print(smaller_range_limits_enu[0])
