@@ -1,9 +1,10 @@
 import matplotlib.pyplot as plt
-from matplotlib import patches
+from matplotlib.patches import Ellipse
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
 import tkinter as tk
 from main import *
+
 
 class Window(object):
 
@@ -26,6 +27,7 @@ class Window(object):
     def column_graph(self):
         self.fig = Figure(figsize=(12, 7.6), dpi=100)
         self.ax = self.fig.add_subplot(111)
+        self.ax.grid()
         self.ax.set_aspect('equal', adjustable='box')
 
 
@@ -54,17 +56,32 @@ class Window(object):
         #         postprocessing.sim_calculations()[i]['sim_downrange_stdev']/1e3,
         #         360-postprocessing.downgrade_line_theta()[i],
         #         alpha=0.3))
-        # self.ax.add_patch(patches.Ellipse(
-        #     (postprocessing.mean()[1][0]/1e3, postprocessing.mean()[0][1]/1e3),
-        #     postprocessing.sim_calculations()[1]['sim_crossrange_stdev']/1e3,
-        #     postprocessing.sim_calculations()[1]['sim_downrange_stdev']/1e3,
-        #     360-postprocessing.downgrade_line_theta()[1],
-        #     alpha=1))
-        #
+
+
+        self.ax.add_patch(Ellipse(
+            (postprocessing.mean()[0][0]/1e3, postprocessing.mean()[0][1]/1e3),
+            postprocessing.sim_calculations()[0]['sim_crossrange_stdev']*6/1e3,
+            postprocessing.sim_calculations()[0]['sim_downrange_stdev']*6/1e3,
+            (360-postprocessing.downgrade_line_theta()[0]),
+            fill=False))
+
+        self.ax.add_patch(Ellipse(
+            (postprocessing.mean()[1][0] / 1e3, postprocessing.mean()[1][1] / 1e3),
+            postprocessing.sim_calculations()[1]['sim_crossrange_stdev']*6 / 1e3,
+            postprocessing.sim_calculations()[1]['sim_downrange_stdev']*6 / 1e3,
+            (360 - postprocessing.downgrade_line_theta()[1]),
+            fill=False))
+
+        self.ax.add_patch(Ellipse(
+            (postprocessing.mean()[2][0] / 1e3, postprocessing.mean()[2][1] / 1e3),
+            postprocessing.sim_calculations()[2]['sim_crossrange_stdev']*6 / 1e3,
+            postprocessing.sim_calculations()[2]['sim_downrange_stdev']*6 / 1e3,
+            (360 - postprocessing.downgrade_line_theta()[2]),
+            fill=False))
 
 
 
-        self.ax.legend()
+        self.ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
         self.chart = FigureCanvasTkAgg(self.fig, master=self.root)
         self.chart.draw()
         self.chart.get_tk_widget().pack(side=tk.TOP, expand=1)

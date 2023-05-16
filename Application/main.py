@@ -1,7 +1,7 @@
 from launchpad import launchpad
 from coordinates_from_csv import *
 from geo2enu import *
-from Postprocessing2 import Postprocessing
+from Postprocessing import Postprocessing
 
 class Main(object):
 
@@ -31,7 +31,6 @@ class Main(object):
             enuArray_list.append(enuArray)
         return enuArray_list
 
-    # def create_simulations_directories(self):
 
 
 
