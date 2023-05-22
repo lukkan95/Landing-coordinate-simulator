@@ -2,12 +2,18 @@ from launchpad import launchpad
 from coordinates_from_csv import *
 from geo2enu import *
 from Postprocessing import Postprocessing
+from GUI_Window import Figure1
+
 
 class Main(object):
 
     def __init__(self):
         self.launchpad_initialization()
         self.coordinates_initialization()
+        self.range_limits_enu = self.coordinateArray2enu(range_limits, launchpad.coordinates)
+        self.smaller_range_limits_enu = self.coordinateArray2enu(smaller_range_limits, launchpad.coordinates)
+        self.range_shore_enu = self.coordinateArray2enu(range_shore, launchpad.coordinates)
+        self.range_sea_limits_enu = self.coordinateArray2enu(range_sea_limits, launchpad.coordinates)
 
 
     def launchpad_initialization(self):
@@ -32,27 +38,11 @@ class Main(object):
         return enuArray_list
 
 
+if __name__ == '__main__':
+    main = Main()
+    postprocessing = Postprocessing()
+    window = Figure1()
+    window.column_graph(main, postprocessing)
 
 
 
-
-# if __name__ == '__main__':
-main = Main()
-z = main.range_limits
-range_limits_enu = main.coordinateArray2enu(range_limits, launchpad.coordinates)
-smaller_range_limits_enu = main.coordinateArray2enu(smaller_range_limits, launchpad.coordinates)
-range_shore_enu = main.coordinateArray2enu(range_shore, launchpad.coordinates)
-range_sea_limits_enu = main.coordinateArray2enu(range_sea_limits, launchpad.coordinates)
-postprocessing = Postprocessing()
-# print(*postprocessing.create_impact_points()[0], sep='\n')
-# print(*postprocessing.geo(), sep='\n')
-# print(*postprocessing.making_result_new(), sep='\n')
-# print(*postprocessing.create_impact_points(postprocessing.making_result_new())[0], sep='\n')
-# print(*postprocessing.create_impact_points_coordinates(), sep='\n')
-# print(postprocessing.enu()[0])
-# print(postprocessing.mean())
-# print(postprocessing.downgrade_line_theta())
-# print(len(postprocessing.range()[1]))
-# print(*postprocessing.sim_calculations(), sep='\n')
-# print(smaller_range_limits_enu[0])
-print(main.launchpad_launch_vector)
