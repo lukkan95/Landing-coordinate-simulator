@@ -97,4 +97,75 @@ class Figure1(object):
             y.append(k[1]/1e3)
         self.ax.plot(x, y, color=color_kind, linewidth=0.5, label=label_kind)
 
+class Figure2(object):
+
+
+    def __init__(self, root=tk.Tk()):
+        self.root = root
+        self.start_parameters()
+        print('Creating figure 2...')
+
+
+    def root_mainloop_start(self):
+        self.root.attributes("-topmost", True)
+        self.root.mainloop()
+
+    def start_parameters(self):
+        self.root.geometry('1200x800')
+        # self.root.resizable(False, False)
+        self.root.title('Figure2')
+
+    def column_graph(self, postprocessing):
+        self.fig = Figure(figsize=(12, 7.6), dpi=100)
+        self.ax = self.fig.add_subplot(111)
+        self.ax.grid()
+        self.ax.set_aspect('equal', adjustable='box')
+
+
+
+        self.add_scatter_to_column_graph(postprocessing.range()[2], 'blue')
+
+
+        self.ax.add_patch(Ellipse(
+            (postprocessing.sim_calculations()[0]['sim_crossrange_mean']/1e3, postprocessing.sim_calculations()[0]['sim_downrange_mean']/1e3),
+            postprocessing.sim_calculations()[0]['sim_crossrange_stdev']*6/1e3,
+            postprocessing.sim_calculations()[0]['sim_downrange_stdev']*6/1e3,
+            0,
+            fill=False, color='#4d4dff', linewidth=2))
+
+        self.ax.add_patch(Ellipse(
+            (postprocessing.sim_calculations()[1]['sim_crossrange_mean']/1e3, postprocessing.sim_calculations()[1][
+                'sim_downrange_mean']/1e3),
+            postprocessing.sim_calculations()[1]['sim_crossrange_stdev']*6 / 1e3,
+            postprocessing.sim_calculations()[1]['sim_downrange_stdev']*6 / 1e3,
+            0,
+            fill=False, color='#cc0000', linewidth=2))
+
+        self.ax.add_patch(Ellipse(
+            (postprocessing.sim_calculations()[2]['sim_crossrange_mean'] / 1e3, postprocessing.sim_calculations()[2][
+                'sim_downrange_mean'] / 1e3),
+            postprocessing.sim_calculations()[2]['sim_crossrange_stdev']*6 / 1e3,
+            postprocessing.sim_calculations()[2]['sim_downrange_stdev']*6 / 1e3,
+            0,
+            fill=False, color='#ffa31a', linewidth=2))
+
+
+        self.chart = FigureCanvasTkAgg(self.fig, master=self.root)
+        self.chart.draw()
+        self.chart.get_tk_widget().pack(side=tk.TOP, fill='both', expand=True)
+        toolbar = NavigationToolbar2Tk(self.chart, self.root)
+        toolbar.update()
+
+
+        self.root_mainloop_start()
+
+
+    def add_scatter_to_column_graph(self, data, color_kind):
+        x = []
+        y = []
+        for k in data:
+            x.append(k[0] / 1e3)
+            y.append(k[1] / 1e3)
+        self.ax.scatter(x, y, facecolors='none', edgecolors=color_kind, s=20, linewidths=0.5)
+
 
