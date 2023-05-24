@@ -8,13 +8,14 @@ import tkinter as tk
 class Figure1(object):
 
 
-    def __init__(self, root=tk.Tk()):
+    def __init__(self, root = tk.Tk()):
+
         self.root = root
         self.start_parameters()
         print('Creating figure 1...')
 
 
-    def root_mainloop(self):
+    def root_mainloop_start(self):
         self.root.attributes("-topmost", True)
         self.root.mainloop()
 
@@ -26,6 +27,7 @@ class Figure1(object):
     def column_graph(self, main, postprocessing):
         self.fig = Figure(figsize=(12, 7.6), dpi=100)
         self.ax = self.fig.add_subplot(111)
+        self.chart = FigureCanvasTkAgg(self.fig, master=self.root)
         self.ax.grid()
         self.ax.set_aspect('equal', adjustable='box')
 
@@ -70,16 +72,18 @@ class Figure1(object):
 
 
         self.ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-        self.chart = FigureCanvasTkAgg(self.fig, master=self.root)
+
+
+        toolbar = NavigationToolbar2Tk(self.chart, self.root)
         self.chart.draw()
         self.chart.get_tk_widget().pack(side=tk.TOP, fill='both', expand=True)
         self.ax.set_xlabel('Odleglosc S-N [km]')
         self.ax.set_ylabel('Odleglosc W-E [km]')
-        toolbar = NavigationToolbar2Tk(self.chart, self.root)
+
         toolbar.update()
 
 
-        self.root_mainloop()
+        # self.root_mainloop_start()
 
     def add_scatter_to_column_graph(self, data, color_kind, label):
         x = []
@@ -118,6 +122,7 @@ class Figure2(object):
     def column_graph(self, postprocessing):
         self.fig = Figure(figsize=(12, 7.6), dpi=100)
         self.ax = self.fig.add_subplot(111)
+        self.chart = FigureCanvasTkAgg(self.fig, master=self.root)
         self.ax.grid()
         self.ax.set_aspect('equal', adjustable='box')
 
@@ -127,17 +132,18 @@ class Figure2(object):
 
 
         self.ax.add_patch(Ellipse(
-            (postprocessing.sim_calculations()[0]['sim_crossrange_mean']/1e3, postprocessing.sim_calculations()[0]['sim_downrange_mean']/1e3),
-            postprocessing.sim_calculations()[0]['sim_crossrange_stdev']*6/1e3,
-            postprocessing.sim_calculations()[0]['sim_downrange_stdev']*6/1e3,
+            (postprocessing.sim_calculations()[2]['sim_crossrange_mean'] / 1e3, postprocessing.sim_calculations()[2][
+                'sim_downrange_mean'] / 1e3),
+            postprocessing.sim_calculations()[2]['sim_crossrange_stdev']*2/1e3,
+            postprocessing.sim_calculations()[2]['sim_downrange_stdev']*2/1e3,
             0,
             fill=False, color='#4d4dff', linewidth=2))
 
         self.ax.add_patch(Ellipse(
-            (postprocessing.sim_calculations()[1]['sim_crossrange_mean']/1e3, postprocessing.sim_calculations()[1][
+            (postprocessing.sim_calculations()[2]['sim_crossrange_mean']/1e3, postprocessing.sim_calculations()[2][
                 'sim_downrange_mean']/1e3),
-            postprocessing.sim_calculations()[1]['sim_crossrange_stdev']*6 / 1e3,
-            postprocessing.sim_calculations()[1]['sim_downrange_stdev']*6 / 1e3,
+            postprocessing.sim_calculations()[2]['sim_crossrange_stdev']*4 / 1e3,
+            postprocessing.sim_calculations()[2]['sim_downrange_stdev']*4 / 1e3,
             0,
             fill=False, color='#cc0000', linewidth=2))
 
@@ -150,10 +156,11 @@ class Figure2(object):
             fill=False, color='#ffa31a', linewidth=2))
 
 
-        self.chart = FigureCanvasTkAgg(self.fig, master=self.root)
+
+        toolbar = NavigationToolbar2Tk(self.chart, self.root)
         self.chart.draw()
         self.chart.get_tk_widget().pack(side=tk.TOP, fill='both', expand=True)
-        toolbar = NavigationToolbar2Tk(self.chart, self.root)
+
         toolbar.update()
 
 

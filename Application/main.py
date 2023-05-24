@@ -2,7 +2,7 @@ from launchpad import launchpad
 from coordinates_from_csv import *
 from geo2enu import *
 from Postprocessing import Postprocessing
-from GUI_Window import Figure1, Figure2
+from GUI_Window import *
 
 
 class Main(object):
@@ -39,11 +39,10 @@ class Main(object):
 
 
 if __name__ == '__main__':
+
     main = Main()
     postprocessing = Postprocessing()
-    # print(*postprocessing.range(), sep='\n')
-    window = Figure2()
-    window.column_graph(postprocessing)
-
-
-
+    window1 = Figure1()
+    window1.column_graph(main, postprocessing)
+    window2 = Figure2()
+    window2.column_graph(postprocessing)
