@@ -1,5 +1,7 @@
 from numpy import *
-from geo2ecef import *
+
+from Application.geo2ecef import geo2ecef
+
 
 def geo2enu(geo_coordinates_transformed, geo_coordinates_base):
 

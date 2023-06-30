@@ -1,5 +1,8 @@
-from geo2ecef import *
+# from geo2ecef import *
 from numpy import *
+
+from Application.geo2ecef import geo2ecef
+
 
 def enu2ecef2(V_enu, R_geo):
     R_ecef = geo2ecef(R_geo)
